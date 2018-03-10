@@ -2,27 +2,28 @@ pragma solidity ^0.4.0;
 
 import "mortal.sol";
 
-contract MyContract is mortal{
+contract SimpleWallet is mortal{
 	
-	uint myVariable;
+	mapping(address => Permission) myAddressMapping;
+
+	struct Permission {
+		bool isAllowed;
+		uint maxTransferAmount;
+	}
 	
-	//constructor
-	function MyContract() payable{
-		myVariable = 5;
-	
+	function addAddressToSenderList(address permitted, uint maxTransferAmount){
+		myAddressMapping[permitted] = Permission(true, maxTransferAmount)
 	}
 
-	//setter
-	function setMyVariable(uint myNewVariable) onlyowner{
-			myVariable = myNewVariable;
-	}
-
-	function getMyVariable() constant returns(uint){
-		return myVariable;
-	}
-
-	function getMycontractBalance() constant returns(uint){
-		return this.balance;
+	function sendFunds(address reciever, uint amountInWei){
+		if(myAddressMapping[msg.sender].isAllowed){
+			if(myAddressMapping[msg.sender].maxTransferAmount <= amountInWei){
+				bool isTheAmountReallySend = reviever.send(amountInwei)
+				if(!isTheAmountReallySend){
+					throw;
+				}
+			}
+		}
 	}
 
 	//fallback
