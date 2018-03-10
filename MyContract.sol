@@ -1,5 +1,6 @@
-progma solidity ^0.4.0;
+pragma solidity ^0.4.0;
 
+import "mortal.sol";
 
 contract MyContract is mortal{
 	
@@ -12,21 +13,20 @@ contract MyContract is mortal{
 	}
 
 	//setter
-	function setMyVariable(uint myNewVariable) onlyownner{
+	function setMyVariable(uint myNewVariable) onlyowner{
 			myVariable = myNewVariable;
 	}
 
 	function getMyVariable() constant returns(uint){
-		return myVariable
+		return myVariable;
 	}
 
-	function getMycontractBalance constant returns(uint){
-		return this.balance
+	function getMycontractBalance() constant returns(uint){
+		return this.balance;
 	}
-	
+
 	//fallback
 	function () payable{
 
 	}
 }
-
